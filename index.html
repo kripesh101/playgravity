@@ -1,0 +1,236 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="icon" href="g.ico" type="image/png" sizes="16x16">
+        <title>Gravity!</title>
+        <script src="jscolor.min.js"></script>
+        <script src="howler.min.js"></script>
+        <script src="hex64.min.js"></script>
+        <script src="main.min.js"></script>
+        <style>
+            #playscreen{
+                position: absolute;
+                top: 40px;
+                left: 10px;
+            }
+            .gridbuttons{
+                background-color: #CCCCCC;
+                vertical-align: top;
+            }
+            #select-screen {
+                position: absolute;
+                width: 400px;
+                height: 400px;
+                z-index: 15;
+                top: 50%;
+                left: 50%;
+                margin: -175px 0 0 -200px;
+                background: red;
+                box-shadow: 0 2px 2px 4px brown;
+            }
+            #get-id {
+                width: 350px;
+                height: 140px;
+                position: absolute;
+                z-index: auto;
+                top: 20%;
+                left: 6%;
+                background-color: floralwhite;
+                font-size: 3.5em;
+            }
+            #enter-id {
+                width: 350px;
+                height: 140px;
+                position: absolute;
+                z-index: auto;
+                top: 60%;
+                left: 6%;
+                background-color: floralwhite;
+                font-size: 3.5em;
+            }
+            #title {
+                top:2.5%;
+                left: 50%;
+                margin: 0px -85px;
+                position: absolute;
+                font-size: 3em;
+            }
+            #data-screen {
+                position: absolute;
+                width: 400px;
+                height: 400px;
+                z-index: 15;
+                top: 50%;
+                left: 50%;
+                margin: -175px 0 0 -200px;
+                background: red;
+                box-shadow: 0 2px 2px 4px brown;
+            }
+            #title2{
+                top:2.5%;
+                left: 50%;
+                margin: 0px -40px;
+                position: absolute;
+                font-size: 2em; 
+            }
+            #configs{
+                top: 25%;
+                left: 20%;
+                position: absolute;
+                font-size: 1.5em;
+            }
+            #hr1{
+                top: 50%;
+                position: absolute;
+                width: 99.5%;
+            }
+            #row,#column,#nop{
+                width: 50px;
+            }
+            #nametable{
+                top: 55%;
+                position: absolute;
+                left: 15%
+            }
+            #idin{
+                top: 15%;
+                left: 20%;
+                position: absolute;
+                font-size: 1.25em;
+            }
+            #idbutton{
+                background-color: floralwhite;
+            }
+            #col{
+                top: 65%;
+                position: absolute;
+                left: 37.5%;
+            }
+            #done{
+                bottom: 5%;
+                position: absolute;
+                left: 55%;
+                font-size: 1.5em;
+                background-color: floralwhite;
+            }
+            #cancel{
+                bottom: 5%;
+                position: absolute;
+                left: 75%;
+                font-size: 1.5em;
+                background-color: floralwhite;
+            }
+            #post-done{
+                position: absolute;
+                top: 75%;
+                left: 20%;
+                font-size: 1.5em;
+            }
+            #status {
+                background:#aaa;
+                border-top:solid 2px #888;
+                bottom:0;
+                left:0;
+                margin:0;
+                padding:0;
+                position:fixed;
+                width:100%;
+                display: none;
+            }
+
+            #status div {
+                margin:0;
+                padding:3px;
+                text-align:center;
+            }
+            #soundconf {
+                background:#aaa;
+                border-bottom:solid 2px #888;
+                top:0;
+                left:0;
+                margin:0;
+                padding:0;
+                position:fixed;
+                width:100%;
+                display: none;
+            }
+            #soundconf div {
+                margin:0;
+                padding:1px;
+                text-align:center;
+            }
+            #get-id:hover {background-color:darkseagreen;}
+            #enter-id:hover {background-color:darkseagreen;}
+        </style>
+    </head>
+    <body>
+        <div id='screen-2'>
+            <div id="data-screen">
+                <div id='title2'>Setup</div>
+                <div id='idin'>
+                    ID <input type="text" class="js-copytextarea" id="idfield">
+                    <button id='idbutton' onclick="copybutton()" class='js-textareacopybtn'>Copy</button>
+                </div>
+                <div id='configs'>
+                    <table>
+                        <tr>
+                            <td>Grid Row</td>
+                            <td><input type="number" min="5" max="17" id="row"></td>
+                        </tr>
+                        <tr>
+                            <td>Grid Column</td>
+                            <td><input type="number" min="5" max="32" id="column"></td>
+                        </tr>
+                        <tr>
+                            <td>Number of Players</td> <td>
+                            <input type="number" min="2" max="6" id="nop">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <hr id="hr1">
+                <br>
+                <div id='player-configs'>
+                    <table id='nametable'>
+                        <tr>
+                            <td>
+                                Player Name
+                            </td>
+                            <td>
+                                <input type="text" id="name">
+                            </td>
+                        </tr>
+                    </table>
+                    <button class="jscolor {valueElement:null,value:'ffffff'}" id="col">Pick your color</button>
+                </div>
+                <div id="post-done">Waiting for other players.</div>
+                <div id="bottom-buttons">
+                    <button id="done" onclick="done()">Done</button>
+                    <button id="cancel" onclick='canc()'>Cancel</button>
+                </div>
+
+            </div>
+        </div>
+        <div id = "screen-1">
+            <div id="select-screen">
+                <div id="title">Gravity!</div>
+                <button id="get-id" onclick="getid()">Get ID</button>
+                <button id="enter-id" onclick="enterid()">Enter ID</button>
+            </div>
+        </div>
+        <div id= "playscreen">
+
+        </div>
+        <div id="status">
+            <div>
+
+            </div>
+        </div>
+        <div id="soundconf">
+            <div>
+                Volume <input type="range" min="0" max="10" step="1" oninput="setvol(this.value)" onchange="setvol(this.value)" value="10">
+            </div>
+        </div>
+    </body>
+</html>
+
