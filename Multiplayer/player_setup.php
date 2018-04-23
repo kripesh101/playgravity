@@ -1,6 +1,6 @@
 <?php
 $gid = $_GET["g_id"];
-$pname = $_GET["player_name"];
+$pname = strip_tags($_GET["player_name"]);
 $pcolor = $_GET["color"];
 $file3 = fopen($gid ."/players.grg", "r");
 $file4 = fopen($gid ."/game_data.grg", "r");
